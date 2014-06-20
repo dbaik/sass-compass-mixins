@@ -1,0 +1,70 @@
+//== Media queries breakpoints from bootstrap
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+// Note: Deprecated $screen-xs and $screen-phone as of v3.0.1
+// Note: Deprecated $screen-xs-min as of v3.2.0
+$screen-xs:                  480px;
+$screen-xs-min:              $screen-xs;
+$screen-phone:               $screen-xs-min;
+
+// Small screen / tablet
+// Note: Deprecated $screen-sm and $screen-tablet as of v3.0.1
+$screen-sm:                  768px;
+$screen-sm-min:              $screen-sm;
+$screen-tablet:              $screen-sm-min;
+
+// Medium screen / desktop
+// Note: Deprecated $screen-md and $screen-desktop as of v3.0.1
+$screen-md:                  992px;
+$screen-md-min:              $screen-md;
+$screen-desktop:             $screen-md-min;
+
+// Large screen / wide desktop
+// Note: Deprecated $screen-lg and $screen-lg-desktop as of v3.0.1
+$screen-lg:                  1200px;
+$screen-lg-min:              $screen-lg;
+$screen-lg-desktop:          $screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max:              ($screen-sm-min - 1);
+$screen-sm-max:              ($screen-md-min - 1);
+$screen-md-max:              ($screen-lg-min - 1);
+
+
+@mixin respond($min: false, $max: false, $ignoreIE: false) {
+
+	@if (not $min) and (not $max) {
+		@warn "Either $min or $max must be specified.";
+	}
+
+	@if $min and $max {
+
+	// Both $min and $max
+		@media (min-width: $min) and (max-width: $max) {
+			@content;
+		}
+
+	} @else {
+		@if $min {
+		// Min only:
+			@media (min-width: $min) {
+				@content;
+			}
+		} @else {
+		// Max only:
+			@media (max-width: $max) {
+				@content;
+			}
+		}
+	}
+}
+
+$retina-pixel-ratio: 2 !default;
+
+@mixin retina($ratio: $retina-pixel-ratio) {
+	@media (-webkit-min-device-pixel-ratio: $ratio), (min-resolution: $ratio * 96dpi) {
+		@content;
+	}
+}
